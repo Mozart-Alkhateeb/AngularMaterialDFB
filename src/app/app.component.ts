@@ -15,7 +15,9 @@ export class AppComponent {
 
   categories: ITabCategory[] = [
     {
-      id: 1, title: 'Cat Questions', questions: [
+      id: 1, 
+      title: 'Cat Questions',
+      questions: [
         {
           id: 1,
           title: 'How old is this cat ?',
@@ -37,7 +39,31 @@ export class AppComponent {
         }
       ]
     },
-    { id: 2, title: 'Dog Questions' }
+    {
+      id: 2, 
+      title: 'Dog Questions',
+      questions: [
+        {
+          id: 3,
+          title: 'How old is this dog ?',
+          categoryId: 2,
+          type: 'input',
+          value: '36',
+          options: []
+        },
+        {
+          id: 4,
+          title: 'What is its gender ?',
+          categoryId: 2,
+          type: 'radio button',
+          value: '',
+          options: [
+            { option: 'boy' },
+            { option: 'girl' }
+          ]
+        }
+      ]
+    }
   ];
 
   constructor(private fb: FormBuilder) {
@@ -87,7 +113,7 @@ export class AppComponent {
     return optionFormGroup;
   }
 
-  addQuestion(categoryIndex: number){
+  addQuestion(categoryIndex: number) {
     const categoryId = this.getCategoryFormGroup(categoryIndex).controls.categoryId.value;
 
     const newQuestion: IQuestion = {
@@ -96,15 +122,19 @@ export class AppComponent {
       type: 'input',
       value: '',
       options: []
-    } 
+    }
 
     this.getQuestionsFormGroups(categoryIndex).push(this.createQuestion(newQuestion));
   }
 
-  addOption(categoryIndex: number, questionsIndex: number){
+  addOption(categoryIndex: number, questionsIndex: number) {
     const newOption: IQuestionOption = {
       option: ''
     };
     this.getOptionsFormGroups(categoryIndex, questionsIndex).push(this.createOption(newOption));
+  }
+
+  submit(categoryIndex) {
+    console.log(this.getCategoryFormGroup(categoryIndex).value);
   }
 }
