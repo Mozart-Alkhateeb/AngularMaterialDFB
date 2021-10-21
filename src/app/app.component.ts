@@ -44,6 +44,7 @@ export class AppComponent {
     // We add a new form group for each category
     this.forms = this.categories.map(c => {
       const categoryFormGroup = this.fb.group({
+        categoryId: [c.id],
         questions: this.fb.array([])
       });
       c.questions?.map(q => (categoryFormGroup.controls['questions'] as FormArray).push(this.createQuestion(q)));
@@ -84,5 +85,26 @@ export class AppComponent {
     });
 
     return optionFormGroup;
+  }
+
+  addQuestion(categoryIndex: number){
+    const categoryId = this.getCategoryFormGroup(categoryIndex).controls.categoryId.value;
+
+    const newQuestion: IQuestion = {
+      categoryId: categoryId,
+      title: '',
+      type: 'input',
+      value: '',
+      options: []
+    } 
+
+    this.getQuestionsFormGroups(categoryIndex).push(this.createQuestion(newQuestion));
+  }
+
+  addOption(categoryIndex: number, questionsIndex: number){
+    const newOption: IQuestionOption = {
+      option: ''
+    };
+    this.getOptionsFormGroups(categoryIndex, questionsIndex).push(this.createOption(newOption));
   }
 }

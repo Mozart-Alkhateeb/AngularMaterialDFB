@@ -5,7 +5,8 @@
   <mat-tab *ngFor="let category of categories; let categoryIndex = index;" label="{{category.title}}">
     <div [formGroup]="getCategoryFormGroup(categoryIndex)">
       <ng-container formArrayName="questions">
-        <ng-container *ngFor="let questionForm of getQuestionsFormGroups(categoryIndex).controls; let questionsIndex = index">
+        <ng-container
+          *ngFor="let questionForm of getQuestionsFormGroups(categoryIndex).controls; let questionsIndex = index">
           <mat-card [formGroup]="questionForm" style="margin: 25px; padding: 5px;">
 
             <mat-form-field appearance="fill" style="width: 100%;">
@@ -26,13 +27,19 @@
               <textarea matInput formControlName="value" placeholder="Value"></textarea>
             </mat-form-field>
 
-            <ng-container formArrayName="options" *ngIf="inputType.value === 'radio button' || inputType.value === 'check box'">
-              <mat-card-title>Options</mat-card-title>
-              <ng-container *ngFor="let optionsForm of getOptionsFormGroups(categoryIndex, questionsIndex).controls; let k = index">
+            <ng-container formArrayName="options"
+              *ngIf="inputType.value === 'radio button' || inputType.value === 'check box'">
+              <mat-card-title>Options
+                <button mat-mini-fab (click)="addOption(categoryIndex, questionsIndex)">
+                  <mat-icon>add</mat-icon>
+                </button>
+              </mat-card-title>
+              <ng-container
+                *ngFor="let optionsForm of getOptionsFormGroups(categoryIndex, questionsIndex).controls; let k = index">
                 <mat-card [formGroup]="optionsForm" style="margin: 25px; padding: 5px;">
                   <mat-form-field appearance="fill" style="width: 100%;">
-                    <mat-label>Options</mat-label>
-                    <input  matInput formControlName="option" placeholder="Option">
+                    <mat-label>Option</mat-label>
+                    <input matInput formControlName="option" placeholder="Option">
                   </mat-form-field>
                 </mat-card>
               </ng-container>
@@ -42,5 +49,8 @@
         </ng-container>
       </ng-container>
     </div>
+    <button mat-mini-fab (click)="addQuestion(categoryIndex)">
+      <mat-icon class="add-course-btn">add</mat-icon>
+    </button>
   </mat-tab>
 </mat-tab-group>
