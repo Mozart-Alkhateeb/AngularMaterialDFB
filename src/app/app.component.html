@@ -9,7 +9,7 @@
           <mat-card [formGroup]="questionForm" style="margin: 25px; padding: 5px;">
 
             <mat-form-field appearance="fill" style="width: 100%;">
-              <mat-select placeholder="Type" formControlName="type" #selectType>
+              <mat-select placeholder="Type" formControlName="type" #inputType>
                 <mat-option value="input">Input</mat-option>
                 <mat-option value="radio button">Radio Button</mat-option>
                 <mat-option value="check box">Check Box</mat-option>
@@ -21,12 +21,12 @@
               <textarea matInput formControlName="title" placeholder="Title"></textarea>
             </mat-form-field>
 
-            <mat-form-field appearance="fill" style="width: 100%;" *ngIf="">
+            <mat-form-field appearance="fill" style="width: 100%;" *ngIf="inputType.value === 'input'">
               <mat-label>Value</mat-label>
               <textarea matInput formControlName="value" placeholder="Value"></textarea>
             </mat-form-field>
 
-            <ng-container formArrayName="options">
+            <ng-container formArrayName="options" *ngIf="inputType.value === 'radio button' || inputType.value === 'check box'">
               <mat-card-title>Options</mat-card-title>
               <ng-container *ngFor="let optionsForm of getOptionsFormGroups(categoryIndex, questionsIndex).controls; let k = index">
                 <mat-card [formGroup]="optionsForm" style="margin: 25px; padding: 5px;">
